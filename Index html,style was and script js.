@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>World Clocks</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>World Clocks</h1>
+    
+    <div>
+        <select id="locationSelect" onchange="displayTime()">
+            <option value="local">Your Local Time</option>
+            <option value="Paris">Paris</option>
+            <option value="New York">New York</option>
+            <option value="Tokyo">Tokyo</option>
+        </select>
+    </div>
+
+    <div id="clocks">
+        <div id="localTime"></div>
+        <div id="parisTime"></div>
+        <div id="newYorkTime"></div>
+        <div id="tokyoTime"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>styles.css (optional for styling):body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 50px;
+}
+
+#clocks div {
+    margin: 20px 0;
+    font-size: 1.5em;
+}script.js:function updateTime() {
+    const localTime = new Date();
+    document.getElementById("localTime").textContent = `Local Time: ${localTime.toLocaleString()}`;
+
+    const parisTime = new Date().toLocaleString("en-US", { timeZone: "Europe/Paris" });
+    document.getElementById("parisTime").textContent = `Paris: ${parisTime}`;
+
+    const newYorkTime = new Date().toLocaleString("en-US", { timeZone: "America/New_York" });
+    document.getElementById("newYorkTime").textContent = `New York: ${newYorkTime}`;
+
+    const tokyoTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Tokyo" });
+    document.getElementById("tokyoTime").textContent = `Tokyo: ${tokyoTime}`;
+}
+
+function displayTime() {
+    const locationSelect = document.getElementById("locationSelect").value;
+
+    if (locationSelect === "local") {
+        document.getElementById("localTime").style.display = "block";
+        document.getElementById("parisTime").style.display = "none";
+        document.getElementById("newYorkTime").style.display = "none";
+        document.getElementById("tokyoTime").style.display = "none";
+    } else {
+        document.getElementById("localTime").style.display = "none";
+        if (locationSelect === "Paris") {
+            document.getElementById("parisTime").style.display = "block";
+        } else {
+            document.getElementById("parisTime").style.display = "none";
+        }
+        if (locationSelect === "New York") {
+            document.getElementById("newYorkTime").style.display = "block";
+        } else {
+            document.getElementById("newYorkTime").style.display = "none";
+        }
+        if (locationSelect === "Tokyo") {
+            document.getElementById("tokyoTime").style.display = "block";
+        } else {
+            document.getElementById("tokyoTime").style.display = "none";
+        }
+    }
+}
+
+setInterval(updateTime, 1000); // Update the time every second
+updateTime(); // Initial call to display the time immediately
